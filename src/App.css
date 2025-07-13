@@ -1,0 +1,66 @@
+/* สำหรับ Matrix Background และข้อความ */
+.app-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  overflow: hidden;
+  /* หากต้องการให้ Matrix Fade Out ทั้งหน้าจอ */
+  transition: opacity 2s ease-in-out; 
+}
+
+/* เมื่อ Matrix จบแล้ว ให้ fade out */
+.matrix-fade-out {
+  opacity: 0;
+}
+
+/* Container สำหรับข้อความหลัก */
+.message-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 10;
+}
+
+/* สไตล์ข้อความทั่วไป (สามารถปรับได้) */
+.message-text {
+  font-size: 5rem;
+  font-weight: bold;
+  color: #fff;
+  opacity: 0; /* ซ่อนไว้ก่อน */
+  animation: fadeIn 1s forwards;
+}
+
+/* เอฟเฟกต์สีชมพูสำหรับ "HAPPY" (เหมือนในรูป) */
+.pink-happy {
+  color: #ff69b4; /* สีชมพู */
+  text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4;
+}
+
+/* Animation สำหรับการแสดงข้อความ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Background อวกาศ (เมื่อจบ sequence) */
+.space-background {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('https://i.pinimg.com/originals/c9/79/11/c97911964f4c8c7c10b77e8a93e3d489.gif'); /* หรือใช้รูปภาพอวกาศของคุณเอง */
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+}
+
+/* สไตล์รูปหนังสือ */
+.book-image {
+  max-width: 400px; /* ขนาดรูปหนังสือ */
+  height: auto;
+}
