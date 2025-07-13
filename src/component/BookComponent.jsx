@@ -166,7 +166,7 @@ text: "ไปทะเลด้วยกันครั้งแรก",        
             <div className="card shadow " style={{
                 backgroundColor: 'transparent',
                 maxWidth: '500px',
-                maxHeight: '400px',
+                maxHeight: window.innerWidth >= 991 ? '700px' : '400px',
                 overflow: 'hidden',
                 position: 'relative'
             }}
@@ -209,10 +209,10 @@ text: "ไปทะเลด้วยกันครั้งแรก",        
                                     src={page.image}
                                     alt={`Book Page ${index + 1}`}
                                     className="img-fluid"
-                                    style={{ maxWidth: '500px', maxHeight: '300px' }}
+                                    style={{ maxWidth: '500px', maxHeight: window.innerWidth >= 991 ? '500px' : '200px', }}
                                 />
                             </div>
-                            <div className="text-center text-white book-text-page">
+                            <div className="text-center text-white book-text-page fs-4">
                                 <p>{page.text}</p>
                             </div>
                         </div>
