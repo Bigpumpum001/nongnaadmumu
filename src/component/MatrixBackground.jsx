@@ -12,7 +12,7 @@ const MatrixBackground = ({ isVisible }) => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const alphabet = 'HAPPYBIRTHDAY';
+        const alphabet = 'NONGNAAD';
         const font_size = 16;
         const columns = Math.floor(canvas.width / font_size);
         const drops = Array(columns).fill(1);

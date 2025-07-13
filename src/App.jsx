@@ -8,7 +8,7 @@ import TypewriterText from './component/TypewriterText';
 // ---------------------------------------------------
 // Component: App (จัดการลำดับการแสดงผล)
 // ---------------------------------------------------
-const messages = ['HAPPY', 'BIRTH', 'DAY', 'TO', 'MYGF', ''];
+const messages = ['HI', 'NONG', 'NAAD', 'MUMU', 'MYGF', ''];
 
 const App = () => {
   const [showMatrix, setShowMatrix] = React.useState(true);
@@ -19,6 +19,8 @@ const App = () => {
   const [showCatsAnimation, setShowCatsAnimation] = React.useState(false);
   const [showHand, setShowHand] = React.useState(false);
   const [showBook, setShowBook] = React.useState(false);
+
+  const [isPortrait, setIsPortrait] = React.useState(false);
 
   // const [matrixFinished, setMatrixFinished] = React.useState(false);
 
@@ -34,12 +36,28 @@ const App = () => {
   //     return () => clearTimeout(matrixTimer);
   //   }
   // }, [showMatrix]);
-
+  // ฟังก์ชันตรวจสอบแนวนอน/แนวตั้ง
+  const checkOrientation = () => {
+    // หากความกว้างน้อยกว่าความสูง แสดงว่าเป็นแนวตั้ง
+    if (window.innerWidth < window.innerHeight) {
+      setIsPortrait(true);
+    } else {
+      setIsPortrait(false);
+    }
+  };
+  // Effect เพื่อตรวจสอบ orientation เมื่อโหลดครั้งแรกและเมื่อมีการ resize
+  React.useEffect(() => {
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+    return () => {
+      window.removeEventListener('resize', checkOrientation);
+    };
+  }, []);
   // 1. จัดการการแสดงข้อความหลักทีละคำ
   React.useEffect(() => {
     if (
       // matrixFinished &&
-      currentMessageIndex < messages.length) {
+      !isPortrait && currentMessageIndex < messages.length) {
       // แสดงข้อความถัดไปทุกๆ 1.5 วินาที
       const messageTimer = setTimeout(() => {
         setCurrentMessageIndex(currentMessageIndex + 1);
@@ -52,7 +70,7 @@ const App = () => {
     // }
   }, [
     // matrixFinished,
-    currentMessageIndex]);
+    currentMessageIndex, isPortrait]);
 
   // Effect 2: จัดการการเปลี่ยนไปหน้าอนิเมชั่นแมวเมื่อข้อความเสร็จ
   React.useEffect(() => {
@@ -80,7 +98,30 @@ const App = () => {
     setShowHand(false);
     setShowBook(true);
   };
+  // 1. แสดงหน้าจอเตือนให้หมุนโทรศัพท์ หากอยู่ในแนวตั้ง
+  if (isPortrait) {
+    return (
+      <div
+        className='d-flex justify-content-center align-items-center flex-column text-center'
+        style={{
+          backgroundColor: 'black',
+          color: '#fff',
+          // height: '100vh',
 
+        }}>
+        <div className="rotation-prompt">
+          <div className="phone-icon">
+            {/* <i className="bi bi-phone phone-icon"></i> */}
+          </div>
+          {/* <p className="message">กรุณาหมุนโทรศัพท์เป็นแนวนอน</p>
+          <p className="message">เพื่อให้ได้รับประสบการณ์ที่ดีที่สุด</p> */}
+        </div>
+        {/* <h1 style={{ fontSize: '2rem' }}>กรุณาหมุนโทรศัพท์เป็นแนวนอน</h1>
+                <p style={{ fontSize: '1.2rem' }}>เพื่อประสบการณ์รับชมที่ดีที่สุด</p> */}
+        {/* คุณอาจเพิ่ม CSS animation เพื่อให้ไอคอนหมุนเพื่อกระตุ้นให้หมุนโทรศัพท์ */}
+      </div>
+    );
+  }
   // หน้าจอพื้นหลังอวกาศ
   if (showSpaceBackground) {
     return (
@@ -91,33 +132,34 @@ const App = () => {
         </div>
         {showCatsAnimation && (
           // แสดงอนิเมชั่นแมว (ใช้รูปภาพที่คุณให้มา)
-          <div style={{ transition: 'opacity 1s ease', zIndex: 10  }}>
+          <div style={{ transition: 'opacity 1s ease', zIndex: 10 }}>
             <img
-              src="https://bestanimations.com/media/birthday-cats/1429967726funny-cat-sunglasses-happy-birthday-gif.gif" // เปลี่ยนเป็น URL รูปแมวที่ถูกต้อง
+              src="https://media.tenor.com/yKqSufoIOHYAAAAM/cat-black-cat.gif" // เปลี่ยนเป็น URL รูปแมวที่ถูกต้อง
               alt="Birthday Animation"
               className="img-fluid"
-              style={{ maxWidth: '600px' }}
+              style={{ maxWidth: '600px' ,borderRadius:'.5rem'}}
             />
+            <p className="text-white mt-3" style={{ fontSize: '1.2rem' }}>Loading...</p> 
           </div>
         )}
         {showHand && (
           // แสดงรูปมือ รอการแตะ
-          <div onClick={handleHandClick} style={{ cursor: 'pointer', zIndex: 10  }}>
+          <div onClick={handleHandClick} style={{ cursor: 'pointer', zIndex: 10 }}>
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTaYXMxz9PVHWoGu_eUQUea_3NOYQXh2cinA&s"
+              src="https://us-fbcloud.net/wb/data/1133/1133771-img.tjr2ml.1.opsctc9j.webp"
               alt="Tap to open"
               className="img-fluid"
-              style={{ maxWidth: '300px', transition: 'opacity 0.5s', opacity: 0.9 }}
+              style={{ maxWidth: '300px', transition: 'opacity 0.5s', opacity: 0.9 ,borderRadius:'.5rem'}}
             />
-            {/* <p className="text-white mt-3" style={{ fontSize: '1.2rem' }}>แตะเพื่อเปิดหนังสือ</p> */}
+            <p className="text-white mt-3" style={{ fontSize: '1.2rem' }}>Pls touch the bok bok!</p> 
           </div>
         )}
         {showBook && (
           // แสดง BookComponent เมื่อหนังสือถูกเปิด
-         
+
           <div style={{ zIndex: 10 }}>
-                        <BookComponent />
-                    </div>
+            <BookComponent />
+          </div>
         )}
 
         {/* ใช้ Bootstrap classes: d-flex, flex-column, align-items-center, justify-content-center */}
